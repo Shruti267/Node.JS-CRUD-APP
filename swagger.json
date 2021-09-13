@@ -1,0 +1,243 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation",
+        "version": "1.0.0",
+        "title": "Tiles API",
+        "contact": {
+            "email": "shruti.bhagwate06@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "schemes": ["http"],
+    "host": "localhost:3080",
+    "basePath": "/api",
+    "paths" : {
+        "/tiles" : {
+            "get" : {
+                "summary" : "Get all the tiles",
+                "description": "Get all the tiles",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/tilesResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            },
+            "post" : {
+                "summary" : "Save the tile",
+                "description": "Save the tile",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "tile object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "tile" : {
+                                    "type": "object",
+                                    "$ref": "#/definitions/Tile"
+                                } 
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/tilesResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tiles/{id}" : {
+            "put" : {
+                "summary" : "Update the tiles",
+                "description": "Update the tiles",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "tile id that needs to be deleted",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "tile object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "tile" : {
+                                    "type": "object",
+                                    "$ref": "#/definitions/Tile"
+                                } 
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/tilesResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            },
+            "delete" : {
+                "summary" : "Delete the tile",
+                "description": "Delete the tile",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "tile id that needs to be deleted",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/tilesResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        }
+    }, 
+    "definitions": {
+        "tilesResponse": {
+            "type": "object",
+            "properties": {
+                "title": {
+                     "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "width": {
+                    "type": "string"
+                },
+                "tags": { 
+                    "type" : "array"
+                },
+                "content": {
+                    "contentLink": {
+                        "type": "string"
+                    },
+                    "contentType": {
+                        "type": "string"
+                    },
+                    "contentDescription": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "Tile": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+               },
+               "description": {
+                   "type": "string"
+               },
+               "width": {
+                   "type": "string",
+                   "enum": ["narrow", "normal", "wide"]
+               },
+               "tags": { 
+                    "type" : "array"
+                },
+               "content": {
+                    "type": "object",
+                    "$ref": "#/definitions/Content"
+               }
+            }
+        },
+        "Content": {
+            "type": "object",
+            "properties": {
+                "contentLink": {
+                    "type": "string"
+                },
+                "contentType": {
+                    "type": "string",
+                    "enum": ["audio", "video", "image", "html"]
+                },
+                "contentDescription": {
+                    "type": "string"
+                }
+            }
+        },
+        "InvalidResponse": {
+            "type": "object",
+            "properties": {
+                "statusCode": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+
+        }
+    }
+}
